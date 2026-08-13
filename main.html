@@ -13,20 +13,22 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #030206;
-  --bg-card: rgba(18, 12, 30, 0.75);
-  --bg-card-hover: rgba(28, 18, 46, 0.95);
-  --border: rgba(155, 92, 255, 0.25);
-  --border-hover: rgba(155, 92, 255, 0.6);
-  --purple: #9b5cff;
-  --purple-bright: #b87aff;
-  --purple-glow: rgba(155, 92, 255, 0.35);
-  --text: #ffffff;
-  --text-dim: #c5bcd6;
-  --text-faint: #8e80aa;
-  --vip: #39ff14;
-  --prince: #ffb703;
-  --king: #f72585;
+  --bg: #0b0910;
+  --bg-card: rgba(22, 18, 32, 0.7);
+  --bg-card-hover: rgba(32, 26, 48, 0.9);
+  --border: rgba(138, 92, 246, 0.18);
+  --border-hover: rgba(138, 92, 246, 0.45);
+  --purple: #7c3aed;
+  --purple-bright: #9333ea;
+  --purple-glow: rgba(124, 58, 237, 0.15);
+  --text: #f3f4f6;
+  --text-dim: #9ca3af;
+  --text-faint: #6b7280;
+  --vip: #22c55e;
+  --prince: #f59e0b;
+  --king: #ec4899;
+  --monster: #111113;
+  --gold-accent: #f59e0b;
   --font-heading: "Outfit", sans-serif;
   --font-body: "Plus Jakarta Sans", sans-serif;
 }
@@ -41,133 +43,139 @@ button { font-family: inherit; cursor: pointer; }
 
 .wrap { max-width: 1400px; margin: 0 auto; padding: 0 16px; position: relative; z-index: 2; }
 
-header { position: sticky; top: 0; z-index: 100; background: rgba(3, 2, 6, 0.98); border-bottom: 1px solid var(--border); backdrop-filter: blur(12px); }
+header { position: sticky; top: 0; z-index: 100; background: rgba(11, 9, 16, 0.95); border-bottom: 1px solid var(--border); backdrop-filter: blur(12px); }
 .header-inner { display: flex; align-items: center; justify-content: space-between; height: 80px; gap: 12px; }
 .logo { font-family: var(--font-heading); font-weight: 900; font-size: clamp(20px, 4vw, 24px); letter-spacing: -0.5px; color: var(--text); display: flex; align-items: center; gap: 10px; white-space: nowrap; cursor: pointer; }
-.logo span { background: linear-gradient(135deg, var(--purple-bright), #ff46b4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.logo span { background: linear-gradient(135deg, #a855f7, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 .header-right { display: flex; align-items: center; gap: 10px; }
 
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--font-heading); font-weight: 700; font-size: 14px; padding: 10px 20px; border-radius: 14px; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); border: 1px solid transparent; white-space: nowrap; }
-.btn-primary { background: linear-gradient(135deg, var(--purple-bright), var(--purple)); color: #fff; box-shadow: 0 8px 25px -6px var(--purple-glow); }
-.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 35px -4px var(--purple-glow); filter: brightness(1.1); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--font-heading); font-weight: 700; font-size: 14px; padding: 10px 20px; border-radius: 12px; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); border: 1px solid transparent; white-space: nowrap; }
+.btn-primary { background: var(--purple); color: #fff; box-shadow: 0 4px 20px -4px var(--purple-glow); }
+.btn-primary:hover { transform: translateY(-2px); background: var(--purple-bright); }
 
 .user-pill { display: flex; align-items: center; gap: 10px; padding: 4px 12px 4px 4px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 99px; cursor: pointer; transition: all 0.2s ease; max-width: 180px; overflow: hidden; }
 .user-pill:hover { border-color: var(--purple); background: var(--bg-card-hover); }
 .user-pill img { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--border); flex-shrink: 0; }
 .user-info { display: flex; flex-direction: column; line-height: 1.1; text-align: left; overflow: hidden; }
 .user-name { font-family: var(--font-heading); font-weight: 700; font-size: 13px; color: var(--text); text-overflow: ellipsis; overflow: hidden; white-space: nowrap; }
-.user-status { font-size: 9px; font-weight: 700; color: var(--purple-bright); text-transform: uppercase; letter-spacing: 0.5px; }
+.user-status { font-size: 9px; font-weight: 700; color: #a855f7; text-transform: uppercase; letter-spacing: 0.5px; }
 .logout-btn { background: var(--bg-card); border: 1px solid var(--border); color: var(--text-faint); border-radius: 50%; width: 38px; height: 38px; display: none; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; flex-shrink: 0; }
-.logout-btn:hover { color: var(--purple-bright); border-color: var(--purple); }
+.logout-btn:hover { color: #a855f7; border-color: var(--purple); }
 
-.modal-overlay { position: fixed; inset: 0; background: rgba(3, 2, 6, 0.9); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 20px; opacity: 0; transition: opacity 0.3s ease; }
+.modal-overlay { position: fixed; inset: 0; background: rgba(11, 9, 16, 0.85); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 20px; opacity: 0; transition: opacity 0.3s ease; }
 .modal-overlay.active { display: flex; opacity: 1; }
-.modal { width: 100%; max-width: 420px; background: linear-gradient(145deg, rgba(22, 14, 38, 0.95), rgba(10, 6, 20, 0.98)); border: 1px solid var(--border); border-radius: 28px; padding: 36px 24px; text-align: center; position: relative; box-shadow: 0 30px 60px rgba(0,0,0,0.7); transform: scale(0.95); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+.modal { width: 100%; max-width: 420px; background: #13101d; border: 1px solid var(--border); border-radius: 24px; padding: 36px 24px; text-align: center; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.5); transform: scale(0.95); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
 .modal-overlay.active .modal { transform: scale(1); }
 .modal-close { position: absolute; top: 18px; right: 18px; background: var(--bg-card); border: 1px solid var(--border); color: var(--text-dim); width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; transition: all 0.2s; }
 .modal-close:hover { color: #fff; border-color: var(--purple); }
-.modal-avatar { width: 72px; height: 72px; border-radius: 20px; margin: 0 auto 16px; border: 2px solid var(--border); background: var(--bg); box-shadow: 0 0 30px var(--purple-glow); }
-.modal h3 { font-family: var(--font-heading); font-weight: 800; font-size: 24px; color: var(--text); margin-bottom: 6px; }
+.modal-avatar { width: 72px; height: 72px; border-radius: 18px; margin: 0 auto 16px; border: 2px solid var(--border); background: var(--bg); }
+.modal h3 { font-family: var(--font-heading); font-weight: 800; font-size: 22px; color: var(--text); margin-bottom: 6px; }
 .modal p { font-size: 13px; color: var(--text-dim); margin-bottom: 20px; }
-.modal input { width: 100%; padding: 14px 18px; border-radius: 14px; border: 1px solid var(--border); background: rgba(3, 2, 6, 0.6); color: var(--text); font-family: inherit; font-size: 15px; outline: none; margin-bottom: 16px; transition: border-color 0.2s; text-align: center; font-weight: 600; }
-.modal input:focus { border-color: var(--purple); box-shadow: 0 0 15px var(--purple-glow); }
-.modal .btn-primary { width: 100%; padding: 14px; font-size: 15px; border-radius: 14px; }
+.modal input { width: 100%; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--border); background: rgba(11, 9, 16, 0.6); color: var(--text); font-family: inherit; font-size: 15px; outline: none; margin-bottom: 16px; transition: border-color 0.2s; text-align: center; font-weight: 600; }
+.modal input:focus { border-color: var(--purple); }
+.modal .btn-primary { width: 100%; padding: 12px; font-size: 15px; border-radius: 12px; }
 
 .main-layout { display: grid; grid-template-columns: 240px 1fr; gap: 30px; padding: 40px 0; align-items: start; }
 
 .sidebar { display: flex; flex-direction: column; gap: 16px; position: sticky; top: 100px; z-index: 10; }
-.sidebar-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: 0 20px 20px 0; padding: 20px 16px; backdrop-filter: blur(12px); box-shadow: 0 15px 35px rgba(0,0,0,0.5); border-left: none; }
-.sidebar-box h3 { font-family: var(--font-heading); font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 12px; padding-left: 4px; }
-.sidebar-nav { display: flex; flex-direction: column; gap: 6px; }
-.sidebar-nav a { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 12px; font-size: 14px; font-weight: 700; color: var(--text-dim); transition: all 0.2s ease; cursor: pointer; }
-.sidebar-nav a:hover, .sidebar-nav a.active { background: rgba(155,92,255,0.2); color: var(--purple-bright); transform: translateX(3px); }
+.sidebar-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: 0 20px 20px 0; padding: 20px 16px; backdrop-filter: blur(12px); border-left: none; }
+.sidebar-box h3 { font-family: var(--font-heading); font-size: 14px; font-weight: 800; color: var(--text); margin-bottom: 12px; padding-left: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+.sidebar-nav { display: flex; flex-direction: column; gap: 4px; }
+.sidebar-nav a { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; font-size: 14px; font-weight: 600; color: var(--text-dim); transition: all 0.2s ease; cursor: pointer; }
+.sidebar-nav a:hover, .sidebar-nav a.active { background: rgba(124, 58, 237, 0.12); color: #c084fc; }
 .sidebar-nav svg { width: 18px; height: 18px; fill: currentColor; flex-shrink: 0; }
 
 @media(max-width: 900px) {
   .main-layout { grid-template-columns: 1fr; gap: 20px; padding: 20px 0; }
   .sidebar { position: relative; top: 0; width: 100%; }
-  .sidebar-box { border-radius: 20px; border-left: 1px solid var(--border); }
+  .sidebar-box { border-radius: 16px; border-left: 1px solid var(--border); }
   .sidebar-nav { flex-direction: row; overflow-x: auto; padding-bottom: 4px; }
   .sidebar-nav a { white-space: nowrap; flex: 1; justify-content: center; }
 }
 
 .hero { padding: 20px 0 30px; text-align: center; }
 .hero-img-container { margin: 0 auto 16px; display: flex; justify-content: center; align-items: center; }
-.floating-img { width: 120px; height: 120px; border-radius: 26px; object-fit: cover; border: 2px solid var(--border); background: var(--bg-card); box-shadow: 0 20px 45px var(--purple-glow); animation: floatAnim 3s ease-in-out infinite; }
+.floating-img { width: 110px; height: 110px; border-radius: 24px; object-fit: cover; border: 1px solid var(--border); background: var(--bg-card); animation: floatAnim 3s ease-in-out infinite; }
 @keyframes floatAnim {
   0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  50% { transform: translateY(-8px); }
   100% { transform: translateY(0px); }
 }
 
-.hero h1 { font-family: var(--font-heading); font-weight: 900; font-size: clamp(28px, 4.5vw, 48px); line-height: 1.1; color: var(--text); margin-bottom: 14px; letter-spacing: -1px; }
-.hero h1 span { background: linear-gradient(135deg, #fff 30%, var(--purple-bright)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.hero h1 { font-family: var(--font-heading); font-weight: 900; font-size: clamp(26px, 4vw, 42px); line-height: 1.15; color: var(--text); margin-bottom: 12px; letter-spacing: -0.5px; }
+.hero h1 span { background: linear-gradient(135deg, #fff 40%, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 .hero p { max-width: 480px; margin: 0 auto 24px; font-size: 14px; color: var(--text-dim); line-height: 1.6; }
 
-.server-widget { display: inline-flex; align-items: center; gap: 14px; padding: 12px 24px 12px 18px; background: #0c0814; border: 2px solid var(--purple); border-radius: 99px; box-shadow: 0 10px 30px rgba(155, 92, 255, 0.25); cursor: pointer; transition: all 0.3s ease; text-align: left; }
-.server-widget:hover { background: #150e26; border-color: var(--purple-bright); transform: translateY(-2px); box-shadow: 0 15px 40px rgba(155, 92, 255, 0.4); }
-.server-pulse { width: 10px; height: 10px; border-radius: 50%; background: var(--vip); box-shadow: 0 0 12px var(--vip); position: relative; flex-shrink: 0; }
-.server-pulse::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid var(--vip); animation: pulseRing 2s infinite; opacity: 0; }
-@keyframes pulseRing { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(2.2); opacity: 0; } }
+.server-widget { display: inline-flex; align-items: center; gap: 14px; padding: 10px 22px 10px 16px; background: #13101d; border: 1px solid var(--border); border-radius: 99px; cursor: pointer; transition: all 0.2s ease; text-align: left; }
+.server-widget:hover { background: #1a1528; border-color: var(--purple); }
+.server-pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--vip); box-shadow: 0 0 8px rgba(34, 197, 94, 0.4); position: relative; flex-shrink: 0; }
 .server-details { display: flex; flex-direction: column; overflow: hidden; }
-.server-ip { font-family: var(--font-heading); font-weight: 900; font-size: 16px; color: #ffffff; letter-spacing: 0.5px; }
-.server-port { font-size: 12px; color: var(--purple-bright); font-weight: 800; text-shadow: 0 0 10px rgba(184, 122, 255, 0.4); }
-.copy-badge { background: var(--purple); color: #fff; padding: 6px 14px; border-radius: 99px; font-size: 11px; font-weight: 800; font-family: var(--font-heading); transition: background 0.2s; flex-shrink: 0; margin-left: 8px; box-shadow: 0 0 10px rgba(155,92,255,0.5); }
-.server-widget:hover .copy-badge { background: var(--purple-bright); }
+.server-ip { font-family: var(--font-heading); font-weight: 800; font-size: 15px; color: var(--text); letter-spacing: 0.5px; }
+.server-port { font-size: 11px; color: #a855f7; font-weight: 700; }
+.copy-badge { background: rgba(124, 58, 237, 0.2); color: #c084fc; padding: 4px 12px; border-radius: 99px; font-size: 11px; font-weight: 700; font-family: var(--font-heading); transition: all 0.2s; flex-shrink: 0; margin-left: 6px; }
+.server-widget:hover .copy-badge { background: var(--purple); color: #fff; }
 
 section { padding: 30px 0; position: relative; display: none; }
 section.active-section { display: block; }
 .sec-head { text-align: center; margin-bottom: 24px; }
-.sec-head .kicker { font-family: var(--font-heading); font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--purple-bright); margin-bottom: 4px; }
-.sec-head h2 { font-family: var(--font-heading); font-weight: 900; font-size: clamp(22px, 3vw, 32px); color: var(--text); letter-spacing: -0.5px; }
+.sec-head .kicker { font-family: var(--font-heading); font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: #a855f7; margin-bottom: 4px; }
+.sec-head h2 { font-family: var(--font-heading); font-weight: 900; font-size: clamp(20px, 2.5vw, 28px); color: var(--text); letter-spacing: -0.5px; }
 
 .supporters-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
 @media(max-width: 860px) { .supporters-grid { grid-template-columns: 1fr; } }
-.supporter-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 20px 14px; text-align: center; position: relative; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-.supporter-card:hover { transform: translateY(-4px); border-color: var(--border-hover); background: var(--bg-card-hover); }
-.supporter-card img { width: 50px; height: 50px; border-radius: 14px; margin: 0 auto 10px; border: 2px solid var(--border); background: var(--bg); }
-.supporter-card h3 { font-family: var(--font-heading); font-size: 16px; font-weight: 800; color: var(--text); margin-bottom: 2px; word-break: break-all; }
-.supporter-amount { font-family: var(--font-heading); font-size: 20px; font-weight: 900; background: linear-gradient(135deg, var(--purple-bright), #fff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 2px; }
-.supporter-rank { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-faint); font-weight: 800; }
-.supporter-badge { position: absolute; top: 10px; left: 10px; font-family: var(--font-heading); font-weight: 900; font-size: 10px; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 6px; border: 1px solid var(--border); color: var(--text); }
-.supporter-card.top-1 { border-color: rgba(255, 183, 3, 0.4); background: linear-gradient(145deg, rgba(30, 20, 10, 0.6), rgba(18, 12, 30, 0.6)); }
-.supporter-card.top-1 .supporter-badge { background: var(--prince); color: #000; border-color: transparent; }
+.supporter-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 18px; padding: 20px 14px; text-align: center; position: relative; transition: all 0.3s ease; }
+.supporter-card:hover { transform: translateY(-3px); border-color: var(--border-hover); background: var(--bg-card-hover); }
+.supporter-card img { width: 48px; height: 48px; border-radius: 12px; margin: 0 auto 10px; border: 1px solid var(--border); background: var(--bg); }
+.supporter-card h3 { font-family: var(--font-heading); font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 2px; word-break: break-all; }
+.supporter-amount { font-family: var(--font-heading); font-size: 18px; font-weight: 800; color: #c084fc; margin-bottom: 2px; }
+.supporter-rank { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-faint); font-weight: 700; }
+.supporter-badge { position: absolute; top: 10px; left: 10px; font-family: var(--font-heading); font-weight: 800; font-size: 10px; background: rgba(255,255,255,0.03); padding: 2px 6px; border-radius: 6px; border: 1px solid var(--border); color: var(--text-dim); }
+.supporter-card.top-1 { border-color: rgba(245, 158, 11, 0.4); background: linear-gradient(145deg, rgba(30, 24, 12, 0.5), rgba(22, 18, 32, 0.7)); }
+.supporter-card.top-1 .supporter-badge { background: var(--prince); color: #000; border-color: transparent; font-weight: 900; }
 .supporter-card.top-1 img { border-color: var(--prince); }
+.supporter-card.top-1 .supporter-amount { color: var(--prince); }
 
 .ranks-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 @media(max-width: 1024px) { .ranks-grid { grid-template-columns: repeat(2, 1fr); } }
 @media(max-width: 600px) { .ranks-grid { grid-template-columns: 1fr; } }
-.rank-card { --accent: var(--purple); background: var(--bg-card); border: 1px solid var(--border); border-radius: 24px; padding: 22px 16px; display: flex; flex-direction: column; position: relative; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-.rank-card::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--accent); }
-.rank-card:hover { transform: translateY(-4px); border-color: var(--accent); background: var(--bg-card-hover); }
+.rank-card { --accent: var(--purple); background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 22px 16px; display: flex; flex-direction: column; position: relative; transition: all 0.3s ease; overflow: hidden; }
+.rank-card::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--accent); }
+.rank-card:hover { transform: translateY(-3px); border-color: var(--border-hover); background: var(--bg-card-hover); }
 .rank-card.tier-vip { --accent: var(--vip); }
 .rank-card.tier-prince { --accent: var(--prince); }
 .rank-card.tier-king { --accent: var(--king); }
-.rank-card.tier-monster { --accent: #ffb703; border-color: rgba(255, 183, 3, 0.4); }
-.rank-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.03); border: 1px solid var(--border); margin-bottom: 14px; }
-.rank-icon svg { width: 20px; height: 20px; fill: var(--accent); }
-.rank-name { font-family: var(--font-heading); font-weight: 900; font-size: 18px; color: var(--text); text-transform: uppercase; }
-.rank-tagline { font-size: 11px; color: var(--text-faint); margin: 2px 0 14px; font-weight: 600; }
-.rank-price { display: flex; align-items: baseline; gap: 6px; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
-.rank-price .now { font-family: var(--font-heading); font-weight: 900; font-size: 26px; color: #fff; }
-.rank-perks { flex: 1; margin-bottom: 18px; display: flex; flex-direction: column; gap: 8px; }
+.rank-card.tier-monster { --accent: #26262b; border-color: rgba(124, 58, 237, 0.4); background: linear-gradient(145deg, rgba(15, 13, 22, 0.9), rgba(22, 18, 32, 0.8)); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+.rank-card.tier-gold { --accent: var(--gold-accent); border-color: rgba(245, 158, 11, 0.3); background: linear-gradient(145deg, rgba(30, 24, 12, 0.35), rgba(22, 18, 32, 0.7)); }
+
+.rank-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.03); border: 1px solid var(--border); margin-bottom: 12px; }
+.rank-icon svg { width: 18px; height: 18px; fill: var(--accent); }
+.rank-card.tier-monster .rank-icon { background: rgba(0,0,0,0.5); border-color: rgba(255,255,255,0.1); }
+.rank-card.tier-monster .rank-icon svg { fill: #f3f4f6; }
+.rank-name { font-family: var(--font-heading); font-weight: 800; font-size: 17px; color: var(--text); text-transform: uppercase; }
+.rank-tagline { font-size: 11px; color: var(--text-faint); margin: 2px 0 12px; font-weight: 600; }
+.rank-price { display: flex; align-items: baseline; gap: 6px; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+.rank-price .now { font-family: var(--font-heading); font-weight: 900; font-size: 24px; color: #fff; }
+.rank-perks { flex: 1; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px; }
 .rank-perks li { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-dim); font-weight: 600; }
 .rank-perks li svg { width: 14px; height: 14px; fill: var(--accent); flex-shrink: 0; }
-.rank-btn { display: flex; align-items: center; justify-content: center; width: 100%; padding: 11px; border-radius: 12px; font-family: var(--font-heading); font-weight: 800; font-size: 12px; text-transform: uppercase; background: var(--accent); border: none; transition: all 0.3s ease; }
-.rank-card.tier-vip .rank-btn { color: #000; }
-.rank-card.tier-prince .rank-btn { color: #000; }
-.rank-card.tier-monster .rank-btn { color: #000; }
-.rank-card:not(.tier-vip):not(.tier-prince):not(.tier-monster) .rank-btn { color: #fff; }
-.rank-btn:hover { filter: brightness(1.15); transform: translateY(-2px); }
+.rank-card.tier-monster .rank-perks li svg { fill: #a855f7; }
+.rank-btn { display: flex; align-items: center; justify-content: center; width: 100%; padding: 10px; border-radius: 10px; font-family: var(--font-heading); font-weight: 700; font-size: 12px; text-transform: uppercase; background: var(--accent); border: none; transition: opacity 0.2s; }
+.rank-card.tier-vip .rank-btn { color: #000; font-weight: 800; }
+.rank-card.tier-prince .rank-btn { color: #000; font-weight: 800; }
+.rank-card.tier-monster .rank-btn { background: #1a1724; color: #fff; border: 1px solid rgba(168, 85, 247, 0.3); font-weight: 800; }
+.rank-card.tier-monster .rank-btn:hover { background: #242035; border-color: #a855f7; }
+.rank-card.tier-gold .rank-btn { color: #000; font-weight: 800; }
+.rank-card:not(.tier-vip):not(.tier-prince):not(.tier-monster):not(.tier-gold) .rank-btn { color: #fff; }
+.rank-btn:hover { opacity: 0.9; }
 
 .preview-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; }
 @media(max-width: 1024px) { .preview-grid { grid-template-columns: repeat(2, 1fr); } }
 @media(max-width: 600px) { .preview-grid { grid-template-columns: 1fr; } }
-.preview-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 24px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; box-shadow: 0 15px 30px rgba(0,0,0,0.3); }
-.preview-card h3 { font-family: var(--font-heading); font-size: 18px; color: var(--text); font-weight: 800; }
+.preview-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 18px; padding: 20px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
+.preview-card h3 { font-family: var(--font-heading); font-size: 16px; color: var(--text); font-weight: 700; }
 .preview-card p { font-size: 13px; color: var(--text-dim); }
 
-.site-footer { border-top: 1px solid var(--border); background: rgba(3, 2, 6, 0.95); padding: 30px 0 20px; margin-top: 40px; text-align: center; }
+.site-footer { border-top: 1px solid var(--border); background: rgba(11, 9, 16, 0.95); padding: 24px 0; margin-top: 40px; text-align: center; }
 .footer-bar { display: flex; justify-content: center; }
 .footer-copyright { font-size: 12px; color: var(--text-faint); font-weight: 600; }
 </style>
@@ -215,7 +223,12 @@ section.active-section { display: block; }
           <nav class="sidebar-nav">
             <a id="navHome"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> Home</a>
             <a id="navRanks"><svg viewBox="0 0 24 24"><path d="M12 2l2.6 6.6L21 10l-5.2 4.3L17.4 21 12 17.3 6.6 21l1.6-6.7L3 10l6.4-1.4L12 2z"/></svg> Ranks</a>
-            <a id="navGolds"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1010 10A10 10 0 0012 2zm0 18a8 8 0 118-8 8 8 0 01-8 8zm1-13h-2v2h2zm0 4h-2v6h2z"/></svg> Golds</a>
+            <a id="navGolds"><svg viewBox="0 0 32 20" fill="none" xmlns="http://www.w3.org/2000/svg" width="32" height="20">
+  <path d="M2 13L5 7H27L30 13H2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M5 7L8 4H24L27 7" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M2 13L5 16H27L30 13" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M10 10H22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg> Golds</a>
           </nav>
         </div>
       </aside>
@@ -250,9 +263,9 @@ section.active-section { display: block; }
                 <button class="btn btn-primary" onclick="triggerNav('store')">View Ranks</button>
               </article>
               <article class="preview-card">
-                <h3>800 Gold</h3>
-                <p>Standard bundle for in-game purchases.</p>
-                <button class="btn btn-primary" onclick="triggerNav('golds')">View Golds</button>
+                <h3>Monster Rank</h3>
+                <p>The ultimate elite black-themed dominance.</p>
+                <button class="btn btn-primary" onclick="triggerNav('store')">View Ranks</button>
               </article>
               <article class="preview-card">
                 <h3>20,000 Gold</h3>
@@ -282,11 +295,6 @@ section.active-section { display: block; }
               <h3 class="rank-name">VIP</h3>
               <p class="rank-tagline">Essential starter advantages</p>
               <div class="rank-price"><span class="now">$3</span></div>
-              <ul class="rank-perks">
-                <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> Exclusive VIP prefix</li>
-                <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> Daily kit claims</li>
-                <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> 3 Set homes</li>
-              </ul>
               <a href="https://discord.gg/EA9Aqv3c4A" target="_blank" rel="noreferrer noopener" class="rank-btn">Purchase VIP</a>
             </article>
 
@@ -295,11 +303,6 @@ section.active-section { display: block; }
               <h3 class="rank-name">Prince</h3>
               <p class="rank-tagline">Advanced competitive boosts</p>
               <div class="rank-price"><span class="now">$6</span></div>
-              <ul class="rank-perks">
-                <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> All VIP perks included</li>
-                <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> Colored chat & name</li>
-                <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> 7 Set homes</li>
-              </ul>
               <a href="https://discord.gg/EA9Aqv3c4A" target="_blank" rel="noreferrer noopener" class="rank-btn">Purchase Prince</a>
             </article>
 
@@ -308,12 +311,19 @@ section.active-section { display: block; }
               <h3 class="rank-name">King</h3>
               <p class="rank-tagline">Ultimate server dominance</p>
               <div class="rank-price"><span class="now">$15</span></div>
-              <ul class="rank-perks">
-                <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> All Prince perks included</li>
-                <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> Particle trail effects</li>
-                <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> Unlimited homes</li>
-              </ul>
+
               <a href="https://discord.gg/EA9Aqv3c4A" target="_blank" rel="noreferrer noopener" class="rank-btn">Purchase King</a>
+            </article>
+
+            <article class="rank-card tier-monster">
+              <div class="rank-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+  <path d="M 4 3 H 20 V 10 C 20 16, 16 20, 12 21 C 8 20, 4 16, 4 10 Z" fill="#000000" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg></div>
+              <h3 class="rank-name" style="color: #fff;">Monster</h3>
+              <p class="rank-tagline">Supreme black-edition power</p>
+              <div class="rank-price"><span class="now">$30</span></div>
+
+              <a href="https://discord.gg/EA9Aqv3c4A" target="_blank" rel="noreferrer noopener" class="rank-btn">Purchase Monster</a>
             </article>
           </div>
         </section>
@@ -324,99 +334,110 @@ section.active-section { display: block; }
             <h2>Golds Packages</h2>
           </div>
           <div class="ranks-grid">
-            <article class="rank-card tier-vip">
-              <div class="rank-icon"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1010 10A10 10 0 0012 2zm0 18a8 8 0 118-8 8 8 0 01-8 8zm1-13h-2v2h2zm0 4h-2v6h2z"/></svg></div>
+            <article class="rank-card tier-gold">
+              <div class="rank-icon"><svg viewBox="0 0 32 20" fill="none" xmlns="http://www.w3.org/2000/svg" width="32" height="20">
+  <path d="M2 13L5 7H27L30 13H2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M5 7L8 4H24L27 7" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M2 13L5 16H27L30 13" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M10 10H22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg></div>
               <h3 class="rank-name">80 Gold</h3>
               <p class="rank-tagline">Starter pouch</p>
               <div class="rank-price"><span class="now">$1.00</span></div>
-              <ul class="rank-perks">
-                <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> Instant delivery</li>
-                <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> Use in server shop</li>
-              </ul>
+
               <a href="https://discord.gg/EA9Aqv3c4A" target="_blank" rel="noreferrer noopener" class="rank-btn">Buy Gold</a>
             </article>
 
-            <article class="rank-card tier-vip">
-              <div class="rank-icon"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1010 10A10 10 0 0012 2zm0 18a8 8 0 118-8 8 8 0 01-8 8zm1-13h-2v2h2zm0 4h-2v6h2z"/></svg></div>
+            <article class="rank-card tier-gold">
+              <div class="rank-icon"><svg viewBox="0 0 32 20" fill="none" xmlns="http://www.w3.org/2000/svg" width="32" height="20">
+  <path d="M2 13L5 7H27L30 13H2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M5 7L8 4H24L27 7" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M2 13L5 16H27L30 13" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M10 10H22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg></div>
               <h3 class="rank-name">800 Gold</h3>
               <p class="rank-tagline">Standard bundle</p>
               <div class="rank-price"><span class="now">$5.00</span></div>
-              <ul class="rank-perks">
-                <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> Instant delivery</li>
-                <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> Use in server shop</li>
-              </ul>
+
               <a href="https://discord.gg/EA9Aqv3c4A" target="_blank" rel="noreferrer noopener" class="rank-btn">Buy Gold</a>
             </article>
 
-            <article class="rank-card tier-vip">
-              <div class="rank-icon"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1010 10A10 10 0 0012 2zm0 18a8 8 0 118-8 8 8 0 01-8 8zm1-13h-2v2h2zm0 4h-2v6h2z"/></svg></div>
+            <article class="rank-card tier-gold">
+              <div class="rank-icon"><svg viewBox="0 0 32 20" fill="none" xmlns="http://www.w3.org/2000/svg" width="32" height="20">
+  <path d="M2 13L5 7H27L30 13H2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M5 7L8 4H24L27 7" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M2 13L5 16H27L30 13" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M10 10H22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg></div>
               <h3 class="rank-name">2,000 Gold</h3>
               <p class="rank-tagline">Popular pouch</p>
               <div class="rank-price"><span class="now">$10.00</span></div>
-              <ul class="rank-perks">
-                <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> Instant delivery</li>
-                <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> Use in server shop</li>
-              </ul>
+
               <a href="https://discord.gg/EA9Aqv3c4A" target="_blank" rel="noreferrer noopener" class="rank-btn">Buy Gold</a>
             </article>
 
-            <article class="rank-card tier-prince">
-              <div class="rank-icon"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1010 10A10 10 0 0012 2zm0 18a8 8 0 118-8 8 8 0 01-8 8zm1-13h-2v2h2zm0 4h-2v6h2z"/></svg></div>
+            <article class="rank-card tier-gold">
+              <div class="rank-icon"><svg viewBox="0 0 32 20" fill="none" xmlns="http://www.w3.org/2000/svg" width="32" height="20">
+  <path d="M2 13L5 7H27L30 13H2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M5 7L8 4H24L27 7" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M2 13L5 16H27L30 13" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M10 10H22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg></div>
               <h3 class="rank-name">4,000 Gold</h3>
               <p class="rank-tagline">Large gold chest</p>
               <div class="rank-price"><span class="now">$20.00</span></div>
-              <ul class="rank-perks">
-                <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> Instant delivery</li>
-                <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> Bonus items included</li>
-              </ul>
               <a href="https://discord.gg/EA9Aqv3c4A" target="_blank" rel="noreferrer noopener" class="rank-btn">Buy Gold</a>
             </article>
 
-            <article class="rank-card tier-prince">
-              <div class="rank-icon"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1010 10A10 10 0 0012 2zm0 18a8 8 0 118-8 8 8 0 01-8 8zm1-13h-2v2h2zm0 4h-2v6h2z"/></svg></div>
+            <article class="rank-card tier-gold">
+              <div class="rank-icon"><svg viewBox="0 0 32 20" fill="none" xmlns="http://www.w3.org/2000/svg" width="32" height="20">
+  <path d="M2 13L5 7H27L30 13H2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M5 7L8 4H24L27 7" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M2 13L5 16H27L30 13" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M10 10H22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg></div>
               <h3 class="rank-name">7,000 Gold</h3>
               <p class="rank-tagline">Advanced gold vault</p>
               <div class="rank-price"><span class="now">$35.00</span></div>
-              <ul class="rank-perks">
-                <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> Instant delivery</li>
-                <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> Bonus items included</li>
-              </ul>
               <a href="https://discord.gg/EA9Aqv3c4A" target="_blank" rel="noreferrer noopener" class="rank-btn">Buy Gold</a>
             </article>
 
-            <article class="rank-card tier-king">
-              <div class="rank-icon"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1010 10A10 10 0 0012 2zm0 18a8 8 0 118-8 8 8 0 01-8 8zm1-13h-2v2h2zm0 4h-2v6h2z"/></svg></div>
+            <article class="rank-card tier-gold">
+              <div class="rank-icon"><svg viewBox="0 0 32 20" fill="none" xmlns="http://www.w3.org/2000/svg" width="32" height="20">
+  <path d="M2 13L5 7H27L30 13H2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M5 7L8 4H24L27 7" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M2 13L5 16H27L30 13" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M10 10H22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg></div>
               <h3 class="rank-name">10,000 Gold</h3>
               <p class="rank-tagline">Epic gold hoard</p>
               <div class="rank-price"><span class="now">$50.00</span></div>
-              <ul class="rank-perks">
-                <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> Instant delivery</li>
-                <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> Premium rewards</li>
-              </ul>
               <a href="https://discord.gg/EA9Aqv3c4A" target="_blank" rel="noreferrer noopener" class="rank-btn">Buy Gold</a>
             </article>
 
-            <article class="rank-card tier-king">
-              <div class="rank-icon"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1010 10A10 10 0 0012 2zm0 18a8 8 0 118-8 8 8 0 01-8 8zm1-13h-2v2h2zm0 4h-2v6h2z"/></svg></div>
+            <article class="rank-card tier-gold">
+              <div class="rank-icon"><svg viewBox="0 0 32 20" fill="none" xmlns="http://www.w3.org/2000/svg" width="32" height="20">
+  <path d="M2 13L5 7H27L30 13H2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M5 7L8 4H24L27 7" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M2 13L5 16H27L30 13" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M10 10H22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg></div>
               <h3 class="rank-name">15,000 Gold</h3>
               <p class="rank-tagline">Legendary gold vault</p>
               <div class="rank-price"><span class="now">$75.00</span></div>
-              <ul class="rank-perks">
-                <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> Instant delivery</li>
-                <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> Premium rewards</li>
-              </ul>
               <a href="https://discord.gg/EA9Aqv3c4A" target="_blank" rel="noreferrer noopener" class="rank-btn">Buy Gold</a>
             </article>
 
-            <article class="rank-card tier-monster">
-              <div class="rank-icon"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1010 10A10 10 0 0012 2zm0 18a8 8 0 118-8 8 8 0 01-8 8zm1-13h-2v2h2zm0 4h-2v6h2z"/></svg></div>
+            <article class="rank-card tier-gold">
+              <div class="rank-icon"><svg viewBox="0 0 32 20" fill="none" xmlns="http://www.w3.org/2000/svg" width="32" height="20">
+  <path d="M2 13L5 7H27L30 13H2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M5 7L8 4H24L27 7" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M2 13L5 16H27L30 13" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M10 10H22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg></div>
               <h3 class="rank-name">20,000 Gold</h3>
               <p class="rank-tagline">Best Value Monster Pack</p>
               <div class="rank-price"><span class="now">$100.00</span></div>
-              <ul class="rank-perks">
-                <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> Instant delivery</li>
-                <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> Maximum bonus & perks</li>
-              </ul>
               <a href="https://discord.gg/EA9Aqv3c4A" target="_blank" rel="noreferrer noopener" class="rank-btn">Buy Gold</a>
             </article>
           </div>
