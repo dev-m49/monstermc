@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MonsterMC — Elite Minecraft Experience</title>
+<meta name="description" content="Join MonsterMC, the ultimate Minecraft network featuring custom ranks, epic gameplay modes, and instant store delivery.">
+<meta name="robots" content="index, follow">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #030206;
+  --bg-card: rgba(18, 12, 30, 0.65);
+  --bg-card-hover: rgba(28, 18, 46, 0.85);
+  --border: rgba(155, 92, 255, 0.18);
+  --border-hover: rgba(155, 92, 255, 0.45);
+  --purple: #9b5cff;
+  --purple-bright: #b87aff;
+  --purple-glow: rgba(155, 92, 255, 0.35);
+  --text: #f3f0fc;
+  --text-dim: #9d92b8;
+  --text-faint: #5f527a;
+  --vip: #39ff14;
+  --prince: #ffb703;
+  --king: #f72585;
+  --font-heading: "Outfit", sans-serif;
+  --font-body: "Plus Jakarta Sans", sans-serif;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text-dim); font-family: var(--font-body); line-height: 1.6; overflow-x: hidden; }
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+button { font-family: inherit; cursor: pointer; }
+::selection { background: var(--purple); color: #fff; }
+
+.bg-glow { position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: 100vw; height: 100vh; pointer-events: none; z-index: 0; overflow: hidden; }
+.bg-glow::before { content: ""; position: absolute; top: -150px; left: 20%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(155,92,255,0.12) 0%, rgba(0,0,0,0) 70%); border-radius: 50%; filter: blur(60px); }
+.bg-glow::after { content: ""; position: absolute; top: 30%; right: 10%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(255,70,180,0.08) 0%, rgba(0,0,0,0) 70%); border-radius: 50%; filter: blur(80px); }
+
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 2; }
+
+header { position: sticky; top: 0; z-index: 100; background: rgba(3, 2, 6, 0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+.header-inner { display: flex; align-items: center; justify-content: space-between; height: 80px; gap: 12px; }
+.logo { font-family: var(--font-heading); font-weight: 900; font-size: clamp(20px, 4vw, 24px); letter-spacing: -0.5px; color: var(--text); display: flex; align-items: center; gap: 10px; white-space: nowrap; }
+.logo span { background: linear-gradient(135deg, var(--purple-bright), #ff46b4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.header-right { display: flex; align-items: center; gap: 10px; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--font-heading); font-weight: 700; font-size: 14px; padding: 10px 20px; border-radius: 14px; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); border: 1px solid transparent; white-space: nowrap; }
+.btn-primary { background: linear-gradient(135deg, var(--purple-bright), var(--purple)); color: #fff; box-shadow: 0 8px 25px -6px var(--purple-glow); }
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 35px -4px var(--purple-glow); filter: brightness(1.1); }
+
+.user-pill { display: flex; align-items: center; gap: 10px; padding: 4px 12px 4px 4px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 99px; cursor: pointer; backdrop-filter: blur(10px); transition: all 0.2s ease; max-width: 180px; overflow: hidden; }
+.user-pill:hover { border-color: var(--purple); background: var(--bg-card-hover); }
+.user-pill img { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--border); flex-shrink: 0; }
+.user-info { display: flex; flex-direction: column; line-height: 1.1; text-align: left; overflow: hidden; }
+.user-name { font-family: var(--font-heading); font-weight: 700; font-size: 13px; color: var(--text); text-overflow: ellipsis; overflow: hidden; white-space: nowrap; }
+.user-status { font-size: 9px; font-weight: 700; color: var(--purple-bright); text-transform: uppercase; letter-spacing: 0.5px; }
+.logout-btn { background: var(--bg-card); border: 1px solid var(--border); color: var(--text-faint); border-radius: 50%; width: 38px; height: 38px; display: none; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; flex-shrink: 0; }
+.logout-btn:hover { color: var(--purple-bright); border-color: var(--purple); }
+
+.modal-overlay { position: fixed; inset: 0; background: rgba(3, 2, 6, 0.85); backdrop-filter: blur(16px); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 20px; opacity: 0; transition: opacity 0.3s ease; }
+.modal-overlay.active { display: flex; opacity: 1; }
+.modal { width: 100%; max-width: 420px; background: linear-gradient(145deg, rgba(22, 14, 38, 0.95), rgba(10, 6, 20, 0.98)); border: 1px solid var(--border); border-radius: 28px; padding: 36px 24px; text-align: center; position: relative; box-shadow: 0 30px 60px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.1); transform: scale(0.95); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+.modal-overlay.active .modal { transform: scale(1); }
+.modal-close { position: absolute; top: 18px; right: 18px; background: var(--bg-card); border: 1px solid var(--border); color: var(--text-dim); width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; transition: all 0.2s; }
+.modal-close:hover { color: #fff; border-color: var(--purple); }
+.modal-avatar { width: 72px; height: 72px; border-radius: 20px; margin: 0 auto 16px; border: 2px solid var(--border); background: var(--bg); box-shadow: 0 0 30px var(--purple-glow); }
+.modal h3 { font-family: var(--font-heading); font-weight: 800; font-size: 24px; color: var(--text); margin-bottom: 6px; }
+.modal p { font-size: 13px; color: var(--text-dim); margin-bottom: 20px; }
+.modal input { width: 100%; padding: 14px 18px; border-radius: 14px; border: 1px solid var(--border); background: rgba(3, 2, 6, 0.6); color: var(--text); font-family: inherit; font-size: 15px; outline: none; margin-bottom: 16px; transition: border-color 0.2s; text-align: center; font-weight: 600; }
+.modal input:focus { border-color: var(--purple); box-shadow: 0 0 15px var(--purple-glow); }
+.modal .btn-primary { width: 100%; padding: 14px; font-size: 15px; border-radius: 14px; }
+
+.hero { padding: 70px 0 60px; text-align: center; }
+.hero-img-container { margin: 0 auto 24px; display: flex; justify-content: center; align-items: center; }
+.floating-img { width: 160px; height: 160px; border-radius: 36px; object-fit: cover; border: 2px solid var(--border); background: var(--bg-card); box-shadow: 0 20px 45px var(--purple-glow); animation: floatAnim 3s ease-in-out infinite; }
+@keyframes floatAnim {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
+}
+
+.hero h1 { font-family: var(--font-heading); font-weight: 900; font-size: clamp(38px, 6vw, 70px); line-height: 1.05; color: var(--text); margin-bottom: 20px; letter-spacing: -1.5px; }
+.hero h1 span { background: linear-gradient(135deg, #fff 30%, var(--purple-bright)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.hero p { max-width: 560px; margin: 0 auto 32px; font-size: 16px; color: var(--text-dim); line-height: 1.6; padding: 0 10px; }
+
+.server-widget { display: inline-flex; align-items: center; gap: 14px; padding: 10px 20px 10px 14px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 99px; backdrop-filter: blur(20px); box-shadow: 0 20px 40px rgba(0,0,0,0.5); cursor: pointer; transition: all 0.3s ease; max-width: 100%; text-align: left; }
+.server-widget:hover { border-color: var(--purple); transform: translateY(-2px); box-shadow: 0 25px 50px rgba(155,92,255,0.15); }
+.server-pulse { width: 10px; height: 10px; border-radius: 50%; background: var(--vip); box-shadow: 0 0 15px var(--vip); position: relative; flex-shrink: 0; }
+.server-pulse::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid var(--vip); animation: pulseRing 2s infinite; opacity: 0; }
+@keyframes pulseRing { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(2.2); opacity: 0; } }
+.server-details { display: flex; flex-direction: column; overflow: hidden; }
+.server-ip { font-family: var(--font-heading); font-weight: 800; font-size: 15px; color: var(--text); letter-spacing: 0.5px; white-space: nowrap; }
+.server-players { font-size: 11px; color: var(--text-faint); font-weight: 600; white-space: nowrap; }
+.copy-badge { background: rgba(155,92,255,0.15); color: var(--purple-bright); padding: 5px 12px; border-radius: 99px; font-size: 11px; font-weight: 700; font-family: var(--font-heading); transition: background 0.2s; flex-shrink: 0; }
+.server-widget:hover .copy-badge { background: var(--purple); color: #fff; }
+
+section { padding: 50px 0; position: relative; }
+.sec-head { text-align: center; margin-bottom: 40px; padding: 0 10px; }
+.sec-head .kicker { font-family: var(--font-heading); font-size: 12px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--purple-bright); margin-bottom: 8px; }
+.sec-head h2 { font-family: var(--font-heading); font-weight: 900; font-size: clamp(28px, 4vw, 40px); color: var(--text); letter-spacing: -1px; }
+
+.supporters-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 960px; margin: 0 auto; }
+@media(max-width: 860px) { .supporters-grid { grid-template-columns: 1fr; max-width: 400px; } }
+.supporter-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 24px; padding: 30px 20px; text-align: center; position: relative; backdrop-filter: blur(20px); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+.supporter-card:hover { transform: translateY(-6px); border-color: var(--border-hover); box-shadow: 0 30px 60px rgba(155,92,255,0.12); background: var(--bg-card-hover); }
+.supporter-card img { width: 72px; height: 72px; border-radius: 20px; margin: 0 auto 16px; border: 2px solid var(--border); background: var(--bg); box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+.supporter-card h3 { font-family: var(--font-heading); font-size: 20px; font-weight: 800; color: var(--text); margin-bottom: 4px; word-break: break-all; }
+.supporter-amount { font-family: var(--font-heading); font-size: 26px; font-weight: 900; background: linear-gradient(135deg, var(--purple-bright), #fff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 6px; }
+.supporter-rank { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-faint); font-weight: 800; }
+.supporter-badge { position: absolute; top: 16px; left: 16px; font-family: var(--font-heading); font-weight: 900; font-size: 12px; background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 10px; border: 1px solid var(--border); color: var(--text); }
+.supporter-card.top-1 { border-color: rgba(255, 183, 3, 0.4); background: linear-gradient(145deg, rgba(30, 20, 10, 0.6), rgba(18, 12, 30, 0.6)); }
+.supporter-card.top-1 .supporter-badge { background: var(--prince); color: #000; border-color: transparent; box-shadow: 0 0 20px rgba(255,183,3,0.4); }
+.supporter-card.top-1 img { border-color: var(--prince); box-shadow: 0 0 30px rgba(255,183,3,0.3); }
+
+.ranks-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+@media(max-width: 1024px) { .ranks-grid { grid-template-columns: repeat(2, 1fr); max-width: 700px; margin: 0 auto; } }
+@media(max-width: 600px) { .ranks-grid { grid-template-columns: 1fr; max-width: 400px; } }
+.rank-card { --accent: var(--purple); background: var(--bg-card); border: 1px solid var(--border); border-radius: 28px; padding: 30px 22px; display: flex; flex-direction: column; position: relative; backdrop-filter: blur(20px); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+.rank-card::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--accent); box-shadow: 0 0 20px var(--accent); }
+.rank-card:hover { transform: translateY(-6px); border-color: var(--accent); box-shadow: 0 30px 60px rgba(0,0,0,0.6), 0 0 30px rgba(155,92,255,0.15); background: var(--bg-card-hover); }
+.rank-card.tier-vip { --accent: var(--vip); }
+.rank-card.tier-prince { --accent: var(--prince); }
+.rank-card.tier-king { --accent: var(--king); }
+.rank-card.tier-monster { --accent: #b5179e; }
+.rank-icon { width: 50px; height: 50px; border-radius: 16px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.03); border: 1px solid var(--border); margin-bottom: 20px; box-shadow: inset 0 0 15px rgba(255,255,255,0.02); }
+.rank-icon svg { width: 24px; height: 24px; fill: var(--accent); filter: drop-shadow(0 0 10px var(--accent)); }
+.rank-name { font-family: var(--font-heading); font-weight: 900; font-size: 24px; color: var(--text); text-transform: uppercase; letter-spacing: -0.5px; }
+.rank-tagline { font-size: 12px; color: var(--text-faint); margin: 4px 0 20px; font-weight: 600; }
+.rank-price { display: flex; align-items: baseline; gap: 10px; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+.rank-price .now { font-family: var(--font-heading); font-weight: 900; font-size: 36px; color: #fff; letter-spacing: -1px; }
+.rank-price .was { font-size: 15px; color: var(--text-faint); text-decoration: line-through; font-weight: 700; }
+.rank-perks { flex: 1; margin-bottom: 24px; display: flex; flex-direction: column; gap: 12px; }
+.rank-perks li { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-dim); font-weight: 600; }
+.rank-perks li svg { width: 16px; height: 16px; fill: var(--accent); flex-shrink: 0; }
+.rank-btn { display: flex; align-items: center; justify-content: center; width: 100%; padding: 14px; border-radius: 14px; font-family: var(--font-heading); font-weight: 800; font-size: 14px; text-transform: uppercase; background: var(--accent); border: none; box-shadow: 0 8px 25px -4px var(--accent); transition: all 0.3s ease; }
+.rank-card.tier-vip .rank-btn { color: #000; }
+.rank-card:not(.tier-vip) .rank-btn { color: #fff; }
+.rank-btn:hover { filter: brightness(1.15); transform: translateY(-2px); box-shadow: 0 12px 30px -2px var(--accent); }
+
+.site-footer { border-top: 1px solid var(--border); background: rgba(3, 2, 6, 0.95); backdrop-filter: blur(20px); padding: 60px 0 30px; margin-top: 80px; position: relative; z-index: 2; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+@media(max-width: 768px) { .footer-grid { grid-template-columns: 1fr; text-align: center; gap: 30px; } }
+.footer-col-brand .footer-logo { font-family: var(--font-heading); font-weight: 900; font-size: 24px; color: var(--text); display: inline-flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+.footer-col-brand .footer-logo span { background: linear-gradient(135deg, var(--purple-bright), #ff46b4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.footer-col-brand p { font-size: 14px; color: var(--text-dim); line-height: 1.6; max-width: 340px; }
+@media(max-width: 768px) { .footer-col-brand p { margin: 0 auto; } }
+.footer-col-links h4 { font-family: var(--font-heading); font-weight: 800; font-size: 16px; color: var(--text); margin-bottom: 18px; text-transform: uppercase; letter-spacing: 0.5px; }
+.footer-col-links ul { display: flex; flex-direction: column; gap: 12px; }
+.footer-col-links a { font-size: 14px; color: var(--text-dim); font-weight: 600; transition: color 0.2s; }
+.footer-col-links a:hover { color: var(--purple-bright); }
+.footer-bar { border-top: 1px solid rgba(155, 92, 255, 0.1); padding-top: 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+@media(max-width: 768px) { .footer-bar { flex-direction: column; justify-content: center; text-align: center; } }
+.footer-copyright { font-size: 13px; color: var(--text-faint); font-weight: 600; }
+.footer-socials { display: flex; align-items: center; gap: 12px; }
+@media(max-width: 768px) { .footer-socials { justify-content: center; width: 100%; } }
+.footer-socials a { width: 40px; height: 40px; border-radius: 12px; background: var(--bg-card); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--text-dim); transition: all 0.2s ease; }
+.footer-socials a:hover { border-color: var(--purple); color: var(--purple-bright); transform: translateY(-3px); background: var(--bg-card-hover); }
+</style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+
+<header>
+  <div class="wrap header-inner">
+    <a href="/" class="logo">Monster<span>MC</span></a>
+    <div class="header-right">
+      <div class="user-pill" id="userPill" role="button" aria-label="User Account">
+        <img id="userAvatar" src="https://minotar.net/avatar/MHF_Question/32" alt="Avatar">
+        <div class="user-info">
+          <span class="user-name" id="userName">Guest</span>
+          <span class="user-status" id="userStatus">Sign In</span>
+        </div>
+      </div>
+      <button class="logout-btn" id="logoutBtn" aria-label="Sign out">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M16 13v-2H7V8l-5 4 5 4v-3h9zm3-10H11c-1.1 0-2 .9-2 2v4h2V5h8v14h-8v-4H9v4c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+      </button>
+      <a href="https://discord.gg/EA9Aqv3c4A" target="_blank" rel="noreferrer noopener" class="btn btn-primary">Discord</a>
+    </div>
+  </div>
+</header>
+
+<div class="modal-overlay" id="loginModal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" id="closeModal">&times;</button>
+    <img class="modal-avatar" id="modalAvatar" src="https://minotar.net/avatar/MHF_Question/64" alt="Skin Preview">
+    <h3 id="modalTitle">Player Authentication</h3>
+    <p>Enter your exact Minecraft username to link your store account.</p>
+    <form id="loginForm">
+      <input type="text" id="usernameInput" placeholder="Minecraft Username" autocomplete="off" minlength="3" maxlength="16" required>
+      <button type="submit" class="btn btn-primary">Continue Shopping</button>
+    </form>
+  </div>
+</div>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-img-container">
+        <img src="m.webp" alt="MonsterMC Icon" class="floating-img">
+      </div>
+      <h1>Dominate The Arena<br><span>On MonsterMC</span></h1>
+      <p>Experience ultra-optimized performance, custom game modes, and instant rank delivery straight to your account.</p>
+      <div class="server-widget" id="serverWidget" title="Click to copy IP">
+        <div class="server-pulse"></div>
+        <div class="server-details">
+          <span class="server-ip">MonsterMC.lol:1015</span>
+          <span class="server-players">Click to copy server IP</span>
+        </div>
+        <span class="copy-badge" id="copyBadge">Copy IP</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="hall-of-fame">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="kicker">Hall of Fame</p>
+        <h2>Top Supporters</h2>
+      </div>
+      <div class="supporters-grid" id="supportersGrid"></div>
+    </div>
+  </section>
+
+  <section id="store">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="kicker">Store Ranks</p>
+        <h2>Unlock Elite Powers</h2>
+      </div>
+      <div class="ranks-grid">
+        <article class="rank-card tier-vip">
+          <div class="rank-icon"><svg viewBox="0 0 24 24"><path d="M12 2l2.6 6.6L21 10l-5.2 4.3L17.4 21 12 17.3 6.6 21l1.6-6.7L3 10l6.4-1.4L12 2z"/></svg></div>
+          <h3 class="rank-name">VIP</h3>
+          <p class="rank-tagline">Essential starter advantages</p>
+          <div class="rank-price"><span class="now">$3</span><span class="was">$5</span></div>
+          <ul class="rank-perks">
+            <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> Exclusive VIP prefix</li>
+            <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> Daily kit claims</li>
+            <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> 3 Set homes</li>
+          </ul>
+          <a href="https://discord.gg/EA9Aqv3c4A" target="_blank" rel="noreferrer noopener" class="rank-btn">Purchase VIP</a>
+        </article>
+
+        <article class="rank-card tier-prince">
+          <div class="rank-icon"><svg viewBox="0 0 24 24"><path d="M5 19h14v-2H5v2zM5 9l4 3 3-6 3 6 4-3-2 8H7L5 9z"/></svg></div>
+          <h3 class="rank-name">Prince</h3>
+          <p class="rank-tagline">Advanced competitive boosts</p>
+          <div class="rank-price"><span class="now">$6</span><span class="was">$10</span></div>
+          <ul class="rank-perks">
+            <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> All VIP perks included</li>
+            <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> Colored chat & name</li>
+            <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> 7 Set homes</li>
+          </ul>
+          <a href="https://discord.gg/EA9Aqv3c4A" target="_blank" rel="noreferrer noopener" class="rank-btn">Purchase Prince</a>
+        </article>
+
+        <article class="rank-card tier-king">
+          <div class="rank-icon"><svg viewBox="0 0 24 24"><path d="M12 2l4 6 7 1-5 5 1 7-7-4-7 4 1-7-5-5 7-1z"/></svg></div>
+          <h3 class="rank-name">King</h3>
+          <p class="rank-tagline">Ultimate server dominance</p>
+          <div class="rank-price"><span class="now">$15</span><span class="was">$20</span></div>
+          <ul class="rank-perks">
+            <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> All Prince perks included</li>
+            <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> Particle trail effects</li>
+            <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> Unlimited homes</li>
+          </ul>
+          <a href="https://discord.gg/EA9Aqv3c4A" target="_blank" rel="noreferrer noopener" class="rank-btn">Purchase King</a>
+        </article>
+
+        <article class="rank-card tier-monster">
+          <div class="rank-icon"><svg viewBox="0 0 24 24"><path d="M12 2c-4 3-8 3.2-8 8 0 5.5 4.4 10 8 12 3.6-2 8-6.5 8-12 0-4.8-4-5-8-8z"/></svg></div>
+          <h3 class="rank-name">Monster</h3>
+          <p class="rank-tagline">God-tier exclusive powers</p>
+          <div class="rank-price"><span class="now">$35</span><span class="was">$50</span></div>
+          <ul class="rank-perks">
+            <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> All King perks included</li>
+            <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> Custom nickname color</li>
+            <li><svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg> Priority queue bypass</li>
+          </ul>
+          <a href="https://discord.gg/EA9Aqv3c4A" target="_blank" rel="noreferrer noopener" class="rank-btn">Purchase Monster</a>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" style="margin-bottom: 50px; text-align: center;">
+  <div class="wrap">
+    <div class="footer-bar" style="justify-content: center; display: flex;">
+      <p class="footer-copyright">&copy; 2026 MonsterMC. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  var KEY = 'monster_user';
+  var userPill = document.getElementById('userPill');
+  var userAvatar = document.getElementById('userAvatar');
+  var userName = document.getElementById('userName');
+  var userStatus = document.getElementById('userStatus');
+  var logoutBtn = document.getElementById('logoutBtn');
+  var loginModal = document.getElementById('loginModal');
+  var closeModal = document.getElementById('closeModal');
+  var loginForm = document.getElementById('loginForm');
+  var usernameInput = document.getElementById('usernameInput');
+  var modalAvatar = document.getElementById('modalAvatar');
+  var serverWidget = document.getElementById('serverWidget');
+  var copyBadge = document.getElementById('copyBadge');
+
+  function updateUI(user){
+    if(user){
+      userAvatar.src = 'https://minotar.net/avatar/' + encodeURIComponent(user) + '/32';
+      userName.textContent = user;
+      userStatus.textContent = 'Linked Account';
+      logoutBtn.style.display = 'flex';
+      userPill.style.cursor = 'default';
+    } else {
+      userAvatar.src = 'https://minotar.net/avatar/MHF_Question/32';
+      userName.textContent = 'Guest';
+      userStatus.textContent = 'Sign In';
+      logoutBtn.style.display = 'none';
+      userPill.style.cursor = 'pointer';
+    }
+  }
+
+  userPill.addEventListener('click', function(){
+    if(!localStorage.getItem(KEY)){
+      loginModal.classList.add('active');
+      setTimeout(function(){ usernameInput.focus(); }, 50);
+    }
+  });
+
+  function closeMod(){ loginModal.classList.remove('active'); }
+  closeModal.addEventListener('click', closeMod);
+  loginModal.addEventListener('click', function(e){ if(e.target === loginModal) closeMod(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeMod(); });
+
+  usernameInput.addEventListener('input', function(){
+    var val = usernameInput.value.trim();
+    modalAvatar.src = val.length > 1 ? 'https://minotar.net/avatar/' + encodeURIComponent(val) + '/64' : 'https://minotar.net/avatar/MHF_Question/64';
+  });
+
+  loginForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var val = usernameInput.value.trim();
+    if(val.length < 3) return;
+    localStorage.setItem(KEY, val);
+    updateUI(val);
+    closeMod();
+    usernameInput.value = '';
+  });
+
+  logoutBtn.addEventListener('click', function(e){
+    e.stopPropagation();
+    localStorage.removeItem(KEY);
+    updateUI(null);
+  });
+
+  updateUI(localStorage.getItem(KEY));
+
+  serverWidget.addEventListener('click', function(){
+    navigator.clipboard.writeText('MonsterMC.lol:1015').then(function(){
+      copyBadge.textContent = 'Copied!';
+      setTimeout(function(){ copyBadge.textContent = 'Copy IP'; }, 2000);
+    });
+  });
+
+  fetch('top.json')
+    .then(function(res){ return res.json(); })
+    .then(function(data){
+      var grid = document.getElementById('supportersGrid');
+      grid.innerHTML = '';
+      data.forEach(function(item, idx){
+        var topClass = idx === 0 ? 'top-1' : '';
+        var html = '<article class="supporter-card ' + topClass + '">' +
+          '<span class="supporter-badge">#' + (idx + 1) + '</span>' +
+          '<img src="https://minotar.net/avatar/' + encodeURIComponent(item.username) + '/64" alt="' + item.username + '">' +
+          '<h3>' + item.username + '</h3>' +
+          '<div class="supporter-amount">$' + parseFloat(item.amount).toFixed(2) + '</div>' +
+          '<span class="supporter-rank">' + item.rank + ' Donor</span>' +
+          '</article>';
+        grid.innerHTML += html;
+      });
+    })
+    .catch(function(err){ console.error(err); });
+})();
+</script>
+
+</body>
+</html>
